@@ -1,0 +1,363 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>All Projects</title>
+    <style>
+      /* General Reset */
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        font-family: Arial, sans-serif;
+        background-color: #f2e7f5;
+        display: flex;
+        justify-content: center;
+      }
+
+      /* Wrapper for 4:3 Aspect Ratio */
+      .wrapper {
+        width: 80vw; /* Adjust overall width to 80% viewport width */
+        max-width: 1024px; /* Restrict the max width */
+        aspect-ratio: 4 / 3; /* Enforce a 4:3 aspect ratio */
+        background-color: white;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        overflow: hidden;
+        display: flex;
+        flex-direction: row;
+      }
+
+      /* Sidebar Categories */
+      .sidebar {
+        width: 250px;
+        background-color: #0077b6;
+        color: white;
+        padding: 20px;
+        overflow-y: auto;
+      }
+
+      .sidebar h2 {
+        margin-bottom: 20px;
+        text-align: center;
+        font-size: 24px;
+        color: #90e0ef;
+      }
+
+      .sidebar ul {
+        list-style: none;
+      }
+
+      .sidebar ul li {
+        padding: 10px;
+        margin: 5px 0;
+        background-color: #03045e;
+        border-radius: 5px;
+        cursor: pointer;
+        text-align: center;
+      }
+
+      .sidebar ul li:hover {
+        background-color: #90e0ef;
+      }
+
+      /* Main Content */
+      .main-content {
+        flex: 1;
+        padding: 20px;
+        overflow-y: auto;
+      }
+
+      /* Header */
+      header {
+        background: linear-gradient(to right, #023e8a, #48cae4);
+        color: white;
+        text-align: center;
+        padding: 10px 0;
+      }
+
+      .logo h1 {
+        font-size: 32px;
+        color: #90e0ef;
+      }
+
+      .search input {
+        width: 100%;
+        padding: 8px;
+        border: none;
+        border-radius: 5px;
+      }
+
+      nav ul {
+        display: flex;
+        justify-content: center;
+        list-style: none;
+        gap: 10px;
+      }
+
+      nav ul li {
+        background-color: #03045e;
+        color: white;
+        padding: 8px 15px;
+        border-radius: 5px;
+        cursor: pointer;
+      }
+
+      nav ul li a {
+        text-decoration: none; /* Remove underline */
+        color: white; /* Keep the text color white */
+        transition: color 0.3s ease; /* Smooth color transition */
+      }
+
+      nav ul li a:hover {
+        color: #90e0ef; /* Change color on hover */
+      }
+
+
+      /* Games Section */
+      .games-section {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr); /* Narrower grid */
+        gap: 10px;
+      }
+
+      .game-card {
+        background-color: white;
+        border-radius: 8px;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        text-align: center;
+        overflow: hidden;
+      }
+
+      .game-card img {
+        width: 100%;
+        height: 120px;
+        object-fit: cover;
+      }
+
+      .game-card p {
+        padding: 10px 0;
+        font-weight: bold;
+        color: #03256c;
+      }
+
+      .game-card {
+        background-color: white;
+        border-radius: 8px;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        text-align: center;
+        overflow: hidden;
+        cursor: pointer;
+        transition: transform 0.3s ease, box-shadow 0.3s ease; /* Smooth transitions */
+        }
+
+      .game-card:hover {
+        transform: translateY(-10px) scale(1.05); /* Pop up effect */
+        box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2); /* Add deeper shadow */
+        }
+
+
+      .game-categories-section {
+          background-color: #f9f9f9;
+          padding: 40px 20px;
+          border-top: 1px solid #ddd;
+        }
+        .game-categories-section .container {
+          max-width: 1200px;
+          margin: 0 auto;
+          display: flex;
+          flex-wrap: wrap;
+          justify-content: space-between;
+        }
+        .game-categories-section .game-categories {
+          display: flex;
+          flex-wrap: wrap;
+          width: 100%;
+        }
+        .game-categories-section .column {
+          flex: 1;
+          min-width: 300px;
+          margin: 0 10px;
+        }
+        .game-categories-section h3 {
+          font-size: 1.5em;
+          margin-bottom: 20px;
+        }
+        .game-categories-section ul {
+          list-style-type: none;
+          padding: 0;
+        }
+        .game-categories-section li {
+          font-size: 1em;
+          margin-bottom: 10px;
+          color: #555;
+        }
+         @media (max-width: 768px) {
+          .game-categories-section .column {
+            flex: 100%;
+            margin: 10px 0;
+          }
+        }
+
+        
+
+      /* Footer */
+      footer {
+        background-color: #03045e;
+        color: white;
+        text-align: center;
+        padding: 10px;
+      }
+
+      /* Responsive Adjustments */
+      @media (max-width: 768px) {
+        .games-section {
+          grid-template-columns: repeat(2, 1fr);
+        }
+
+        .sidebar {
+          width: 200px;
+        }
+      }
+
+      @media (max-width: 480px) {
+        .games-section {
+          grid-template-columns: repeat(1, 1fr);
+        }
+
+        .wrapper {
+          width: 100%;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <!-- WRAPPER -->
+    <div class="wrapper">
+      <!-- SIDEBAR -->
+      <div class="sidebar">
+        <h2>All Categories</h2>
+        <ul>
+          <li>Music</li>
+          <li>Fun</li>
+          <li>E-Commerce</li>
+          <li>Personal</li>
+          <li>Professional</li>
+          <li>Robotics</li>
+          <li>Electronics</li>
+          <li>Simulation</li>
+          <li>Artificial Intelligence</li>
+        </ul>
+      </div>
+
+      <!-- MAIN CONTENT -->
+      <div class="main-content">
+        <!-- HEADER -->
+        <header>
+          <div class="logo">
+            <h1>All Projects</h1>
+          </div>
+          <br>
+          <nav>
+            <ul>
+              <li><a href="/gifs/404.jpg">Recently Finished</a></li>
+              <li><a href="index.html">Home</a></li>
+              <li><a href="/gifs/102.jpg">Cooked by me</a></li>
+            </ul>
+          </nav>
+        </header>
+
+        <br>
+
+        <!-- GAMES SECTION -->
+        <section class="games-section">
+          <div class="game-card">
+            <a href="https://audio-sampler-mocha.vercel.app/">
+            <img src="/gifs/audio_sampler.png" alt="Game 1" />
+            <p>Audio Sampler</p>
+            </a>
+          </div>
+          <div class="game-card">
+            <a href="https://dhruvgoswami.com/">
+            <img src="/gifs/personal_web.png" alt="Game 2" />
+            <p>Personal Website</p>
+            </a>
+          </div>
+          <div class="game-card">
+            <a href="https://codepen.io/DhruvGoswami10/full/gOJmRPO">
+            <img src="/gifs/calc.png" alt="Game 3" />
+            <p>Scientific Calculator</p>
+            </a>
+          </div>
+          <div class="game-card">
+            <a href="https://www.instagram.com/wizard.py/?igsh=MTMyZm9sYmJ2bDYzNA%3D%3D#">
+            <img src="/gifs/tars.jpg" alt="Game 4" />
+            <p>TARS</p>
+            </a>
+          </div>
+          <div class="game-card">
+            <a href="https://carwash-project-alpha.vercel.app/">
+            <img src="/gifs/carwash.png" alt="Game 4" />
+            <p>E-Commerce Website</p>
+            </a>
+          </div>
+        </section>
+
+        <br>
+
+        <section class="game-categories-section">
+            <div class="container">
+              <div class="game-categories">
+                <div class="column">
+                  <h3>Programming Languages</h3>
+                  <ul>
+                    <li>C</li>
+                    <li>Java</li>
+                    <li>Python</li>
+                    <li>C++</li>
+                    <li>JavaScript</li>
+                    <li>PHP</li>
+                    <li>SQL</li>
+                    <li>Swift</li>
+                    <li>React</li>
+                    <li>Assembly Language 8086</li>
+                    <li>MATLAB</li>
+                    <li>TypeScript</li>
+                    <li>Qucak</li>
+                    <li>...and many more</li>
+                  </ul>
+                </div>
+                <div class="column">
+                  <h3>Frameworks</h3>
+                  <ul>
+                    <li>Django</li>
+                    <li>Flask</li>
+                    <li>Bootstrap</li>
+                    <li>jQurey</li>
+                    <li>Next.js</li>
+                    <li>Node.js</li>
+                    <li>PyTorch</li>
+                    <li>Tensor Flow</li>
+                    <li>CakePHP</li>
+                    <li>AngularJS</li>
+                    <li>React Native</li>
+                    <li>Vue.js</li>
+                    <li>Flutter</li>
+                    <li>...and many more</li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </section>
+
+        <!-- FOOTER -->
+        <footer>
+          <p>&copy; 2024 Dhruv Goswami. All Rights Reserved.</p>
+        </footer>
+      </div>
+    </div>
+  </body>
+</html>

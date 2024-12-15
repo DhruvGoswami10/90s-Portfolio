@@ -1,0 +1,391 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Retro Ally</title>
+    <style>
+        /* Apply the GIF background */
+        body {
+            margin: 0;
+            padding: 0;
+            background: url('/gifs/space.gif') no-repeat center center fixed;
+            background-size: cover;
+            font-family: 'Comic Sans MS', cursive, sans-serif; /* 90s font */
+            color: #fff;
+            text-shadow: 2px 2px #000; /* Retro-style text shadow */
+        }
+
+        /* Style the header */
+        header {
+            display: flex;
+            justify-content: space-between; /* Align items horizontally */
+            align-items: center; /* Center vertically */
+            padding: 20px;
+            background-color: rgba(0, 0, 0, 0.7); /* Semi-transparent black for retro contrast */
+            border-bottom: 5px dotted #00ff00; /* Retro border style */
+        }
+
+        /* Styling for the logo */
+        header img {
+            max-width: 300px;
+            margin-bottom: 0;
+        }
+
+        /* Styling for navigation links */
+        nav {
+            display: flex;
+            gap: 15px;
+        }
+
+        nav a {
+            text-decoration: none;
+            color: #00ff00;
+            font-size: 1.2em;
+        }
+
+        nav a:hover {
+            text-decoration: underline;
+        }
+
+        @keyframes neon {
+            from {
+                text-shadow: 0 0 5px #0ff, 0 0 10px #0ff, 0 0 20px #0ff, 0 0 40px #0ff;
+            }
+            to {
+                text-shadow: 0 0 10px #f0f, 0 0 20px #f0f, 0 0 40px #f0f, 0 0 60px #f0f;
+            }
+        }
+
+        /* Style for the game canvas */
+        canvas {
+            display: block;
+            margin: 30px auto;
+            border: 2px solid #fff;
+        }
+
+        /* Container for gif box and about me section */
+        .content {
+            display: flex;
+            justify-content: space-between;
+            padding: 20px;
+        }
+
+        /* Gif box styling */
+        .gif-box {
+            width: 40%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .gif-box img {
+            max-width: 100%;
+            border-radius: 15px;
+        }
+
+        /* About Me section */
+        .about-me {
+            width: 55%;
+            padding: 30px;
+            background-color: rgba(0, 0, 0, 0.7);
+            text-align: left;
+            font-family: 'Courier New', Courier, monospace; /* Terminal-like font */
+            color: #00ff00;
+            border-radius: 10px;
+            white-space: pre-wrap; /* To keep line breaks for typing effect */
+            overflow: hidden;
+            position: relative;
+            height: 400px;
+        }
+
+        .about-me h2 {
+            font-size: 2.5em;
+            margin-bottom: 20px;
+        }
+
+        .about-me p {
+            font-size: 1.5em;
+            color: #fff;
+            animation: typing 4s steps(30) 1s 1 normal both;
+        }
+
+        /* Typing effect */
+        @keyframes typing {
+            from {
+                width: 0;
+            }
+            to {
+                width: 100%;
+            }
+        }
+
+        /* Game Over Styling */
+        .game-over {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 3em;
+            color: #ff0000;
+            text-shadow: 2px 2px 5px #000;
+            font-family: 'Comic Sans MS', cursive, sans-serif;
+        }
+
+        /* Falling text animation */
+        .falling-text {
+            position: absolute;
+            color: #00ff00;
+            font-size: 20px;
+            animation: fall 5s linear forwards;
+        }
+
+        @keyframes fall {
+            to {
+                transform: translateY(400px); /* Adjust the distance for the falling effect */
+                opacity: 0;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <nav>
+            <a href="projects.html">Projects</a>
+        </nav>
+        <img src="/gifs/name4.png" alt="Retro Logo">
+        <nav>
+            <a href="about.html">About Me</a>
+        </nav>
+    </header>
+
+    <!-- Game Canvas -->
+    <canvas id="gameCanvas" width="800" height="600"></canvas>
+
+    <!-- Content Section with gif box and about me box -->
+    <div class="content">
+        <!-- Gif Box -->
+        <div class="gif-box">
+            <img src="/gifs/pacman-pac.gif" alt="Space Invaders GIF">
+        </div>
+
+        <!-- About Me Box -->
+        <div class="about-me">
+            <h2>About Me</h2>
+            <p>
+                Hello! I'm a passionate developer who loves retro games and creating fun, interactive web experiences. 
+                I'm always looking for new challenges and ways to improve my skills. Thanks for visiting!
+            </p>
+        </div>
+    </div>
+
+    <footer>
+        <p style="text-align: center; padding: 10px; background-color: rgba(0, 0, 0, 0.7); color: #00ff00;">&copy; 2024 Retro 90s Vibes</p>
+    </footer>
+
+    <div id="gameOver" class="game-over" style="display: none;">GAME OVER</div>
+
+    <script>
+        const canvas = document.getElementById('gameCanvas');
+        const ctx = canvas.getContext('2d');
+    
+        // Player
+        const player = {
+            x: canvas.width / 2 - 25,
+            y: canvas.height - 50,
+            width: 50,
+            height: 30,
+            speed: 4, // Increased player speed
+            dx: 2, // Change in x for movement
+            direction: 1 // 1 for right, -1 for left
+        };
+    
+        // Invaders
+        const invaderWidth = 40;
+        const invaderHeight = 30;
+        const invaders = [];
+        const invaderCols = 8;
+        const invaderRows = 4;
+        let invaderSpeed = 0.5; // Slow invader speed
+    
+        // Bullet
+        const bullet = {
+            x: player.x + player.width / 2 - 5,
+            y: player.y - 10,
+            width: 10,
+            height: 20,
+            speed: 4,
+            active: false
+        };
+    
+        // Falling Texts (programming languages)
+        const fallingTexts = [];
+    
+        // Programming languages for invaders
+        const languages = ["HTML", "JAVASCRIPT", "PYTHON", "C++", "JAVA", "RUBY", "PHP", "C#", "Swift", "SQL", "React", "ASM 8086", "TYPESCRIPT", "MATLAB"];
+    
+        // Game Over flag
+        let gameOver = false;
+    
+        // Create Invaders (Centered)
+        function createInvaders() {
+            const totalWidth = invaderCols * (invaderWidth + 10) - 10; // Total width of the invader grid
+            const startX = (canvas.width - totalWidth) / 2; // Centering the grid
+    
+            for (let row = 0; row < invaderRows; row++) {
+                invaders[row] = [];
+                for (let col = 0; col < invaderCols; col++) {
+                    invaders[row][col] = {
+                        x: startX + col * (invaderWidth + 10),
+                        y: row * (invaderHeight + 10) + 30,
+                        width: invaderWidth,
+                        height: invaderHeight,
+                        alive: true,
+                        language: languages[Math.floor(Math.random() * languages.length)] // Random language for each invader
+                    };
+                }
+            }
+        }
+    
+        // Draw player
+        function drawPlayer() {
+            ctx.fillStyle = '#00ff00';
+            ctx.fillRect(player.x, player.y, player.width, player.height);
+        }
+    
+        // Draw invaders
+        function drawInvaders() {
+            for (let row = 0; row < invaders.length; row++) {
+                for (let col = 0; col < invaders[row].length; col++) {
+                    if (invaders[row][col].alive) {
+                        ctx.fillStyle = '#ff0000';
+                        ctx.fillRect(invaders[row][col].x, invaders[row][col].y, invaderWidth, invaderHeight);
+                    }
+                }
+            }
+        }
+    
+        // Move Invaders
+        function moveInvaders() {
+            invaders.forEach(row => {
+                row.forEach(invader => {
+                    if (invader.alive) {
+                        invader.y += invaderSpeed;
+                    }
+                });
+            });
+        }
+    
+        // Check Collision with Player
+        function checkPlayerCollision() {
+            invaders.forEach(row => {
+                row.forEach(invader => {
+                    if (invader.alive) {
+                        if (invader.x < player.x + player.width &&
+                            invader.x + invader.width > player.x &&
+                            invader.y < player.y + player.height &&
+                            invader.y + invader.height > player.y) {
+                            gameOver = true;
+                            document.getElementById('gameOver').style.display = 'block';
+                        }
+                    }
+                });
+            });
+        }
+    
+        // Update Bullet
+        function updateBullet() {
+            if (bullet.active) {
+                bullet.y -= bullet.speed; // Move the bullet upwards
+                if (bullet.y < 0) {
+                    bullet.active = false;
+                }
+            }
+        }
+    
+        // Draw Bullet
+        function drawBullet() {
+            if (bullet.active) {
+                ctx.fillStyle = '#00ffff'; // Bullet color
+                ctx.fillRect(bullet.x, bullet.y, bullet.width, bullet.height); // Draw bullet
+            }
+        }
+    
+        // Check Bullet Invader Collision
+        function checkBulletInvaderCollision() {
+            invaders.forEach(row => {
+                row.forEach(invader => {
+                    if (invader.alive && bullet.active) {
+                        if (bullet.x < invader.x + invader.width &&
+                            bullet.x + bullet.width > invader.x &&
+                            bullet.y < invader.y + invader.height &&
+                            bullet.y + bullet.height > invader.y) {
+                            invader.alive = false;
+                            bullet.active = false;
+                            fallingTexts.push({
+                                text: invader.language,
+                                x: invader.x + invader.width / 2,
+                                y: invader.y,
+                                size: 20
+                            });
+                        }
+                    }
+                });
+            });
+        }
+    
+        // Player Controls (AI movement)
+        function aiPlayerControl() {
+            player.x += player.speed * player.direction;
+            if (player.x <= 0 || player.x + player.width >= canvas.width) {
+                player.direction = -player.direction;
+            }
+            if (!bullet.active) {
+                bullet.active = true;
+                bullet.x = player.x + player.width / 2 - 5;
+                bullet.y = player.y - 10;
+            }
+        }
+    
+        // Game Loop
+        function gameLoop() {
+            if (gameOver) return;
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            moveInvaders();
+            drawPlayer();
+            drawInvaders();
+            updateBullet();
+            drawBullet(); // Ensure the bullet is drawn
+            checkBulletInvaderCollision();
+            aiPlayerControl();
+            checkPlayerCollision();
+            drawFallingTexts();
+            updateFallingTexts();
+            requestAnimationFrame(gameLoop);
+        }
+    
+        // Update Falling Texts
+        function updateFallingTexts() {
+            fallingTexts.forEach((text, index) => {
+                text.y += 2;
+                if (text.y > canvas.height) {
+                    fallingTexts.splice(index, 1);
+                }
+            });
+        }
+    
+        // Draw Falling Texts
+        function drawFallingTexts() {
+            fallingTexts.forEach(text => {
+                ctx.font = `${text.size}px Arial`;
+                ctx.fillText(text.text, text.x - ctx.measureText(text.text).width / 2, text.y);
+            });
+        }
+    
+        // Initialize Game
+        createInvaders();
+        gameLoop();
+    </script>
+    
+</body>
+</html>

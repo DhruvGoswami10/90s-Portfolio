@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NBC About me</title>
+    <style>
+        /* General Reset */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        /* Body */
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f2f2f2;
+            color: #333;
+        }
+
+        /* Top Header */
+        .top-header {
+            background-color: #003366;
+            color: white;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 20px;
+        }
+
+        .top-header .logo {
+            font-size: 24px;
+            font-weight: bold;
+        }
+
+        .top-header nav ul {
+            list-style: none;
+            display: flex;
+        }
+
+        .top-header nav ul li {
+            margin-right: 20px;
+        }
+
+        .top-header nav ul li a {
+            text-decoration: none;
+            color: white;
+            transition: color 0.3s ease;
+        }
+
+        .top-header nav ul li a:hover {
+            color: #ff9900;
+        }
+
+        .search-bar input {
+            padding: 5px;
+            border: none;
+            border-radius: 3px;
+        }
+
+        .search-bar button {
+            background-color: #ff9900;
+            color: white;
+            padding: 5px 10px;
+            border: none;
+            cursor: pointer;
+        }
+
+        /* Breaking News */
+        .breaking-news {
+            background-color: #ff3333;
+            color: white;
+            text-align: center;
+            padding: 10px 0;
+            font-weight: bold;
+        }
+
+        /* Hero Section */
+        .hero {
+            display: flex;
+            margin: 20px;
+            gap: 20px;
+        }
+
+        .hero .headline {
+            flex: 2;
+        }
+
+        .hero .headline img {
+            width: 100%;
+            height: auto;
+        }
+
+        .hero .side-news {
+            flex: 1;
+        }
+
+        .side-news .news-item {
+            margin-bottom: 10px;
+            padding: 10px;
+            background-color: white;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        /* News Categories */
+        .news-categories {
+            display: flex;
+            justify-content: space-around;
+            margin: 20px;
+        }
+
+        .category {
+            background-color: white;
+            padding: 15px;
+            width: 30%;
+            box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Cards Section */
+        .news-cards {
+            display: flex;
+            flex-direction: column; /* Cards stacked vertically */
+            align-items: center;
+            margin: 20px 0;
+            gap: 20px;
+        }
+
+        .news-card {
+            background-color: white;
+            border: 1px solid #ddd;
+            padding: 15px;
+            width: 50%; /* Full-width appearance */
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            border-top: 5px solid;
+            border-radius: 5px;
+        }
+
+        .news-card.business {
+            border-color: #8b0000;
+        }
+
+        .news-card.sports {
+            border-color: #8b6f4f;
+        }
+
+        .news-card h3 {
+            margin-bottom: 10px;
+            font-size: 1.1em;
+            color: #333;
+        }
+
+        .news-card p {
+            font-size: 0.9em;
+            color: #555;
+            margin-bottom: 10px;
+        }
+
+        .news-card ul {
+            list-style: none;
+            font-size: 0.85em;
+        }
+
+        .news-card ul li a {
+            color: #0077cc;
+            text-decoration: none;
+        }
+
+        .news-card ul li a:hover {
+            text-decoration: underline;
+        }
+
+        /* Footer */
+        footer {
+            background-color: #003366;
+            color: white;
+            text-align: center;
+            padding: 10px 0;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <!-- Top Header -->
+    <header class="top-header">
+        <div class="logo">NBC NEWS</div>
+        <nav>
+            <ul>
+                <li><a href="index.html">Home</a></li>
+                <li><a href="#">World</a></li>
+                <li><a href="#">Politics</a></li>
+                <li><a href="#">Business</a></li>
+                <li><a href="#">Sports</a></li>
+                <li><a href="#">Entertainment</a></li>
+                <li><a href="#">Health</a></li>
+                <li><a href="#">Tech & Science</a></li>
+                <li><a href="#">Travel</a></li>
+            </ul>
+        </nav>
+        <div class="search-bar">
+            <input type="text" placeholder="Search...">
+            <button>Go</button>
+        </div>
+    </header>
+
+    <!-- Breaking News Banner -->
+    <section class="breaking-news">
+        <p>BREAKING: Pebble pad chrome extension project has reached 40+ donwloads world-wide</p>
+    </section>
+
+    <!-- Main Content -->
+    <main>
+        <section class="hero">
+            <div class="headline">
+                <h1>Dhruv: 'It is time for that academic comeback' at university finals, but looks cooked as prep is too low!</h1>
+                <img src="/gifs/self (1).jpg" alt="Headline News">
+            </div>
+            <div class="side-news">
+                <div class="news-item">
+                    <h3>TARS, AI based robot project has come to an end</h3>
+                </div>
+                <div class="news-item">
+                    <h3>8 more personal projects pending, no plans to finish them</h3>
+                </div>
+                <div class="news-item">
+                    <h3>Uni exams are over, nothing to do during winter break</h3>
+                </div>
+                <div class="news-item">
+                    <h3>Codedex Holiday hackathon about to end, winner yet to be announced</h3>
+                </div>                
+            </div>
+        </section>
+
+        <!-- News Categories -->
+        <section class="news-categories">
+            <div class="category">
+                <h2>Hobbies</h2>
+                <p>Go karting, Sim Racing and Fooball and programming</p>
+            </div>
+            <div class="category">
+                <h2>Music</h2>
+                <p>Artists: Ed Sheeran, Eminem, Adele and Charlie Puth</p>
+            </div>
+            <div class="category">
+                <h2>Sports</h2>
+                <p>Karate International goal medalist</p>
+            </div>
+        </section>
+
+        <!-- News Cards Section -->
+        <section class="news-cards">
+            <!-- Business Card -->
+            <div class="news-card business">
+                <h3>Mini TARS, AI robot from interstellar project</h3>
+                <p>A miniature version of giant sarcastic robot has been put together by tech and interstellar movie enthusiast. link to the project given below:</p>
+                <ul>
+                    <li><a href="https://www.instagram.com/wizard.py/?igsh=MTMyZm9sYmJ2bDYzNA%3D%3D#">Instagram page link to TARS Project</a></li>
+                </ul>
+            </div>
+
+            <!-- Sports Card -->
+            <div class="news-card sports">
+                <h3>Pebble pad auto-save google chrome extension</h3>
+                <ul>
+                    <li><a href="https://chromewebstore.google.com/detail/pebblepad-auto-save/cdlhkcmpgaflcdmcbhinaakkhflmibff">Link to chrome web store to check out CRX</a></li>
+                </ul>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <p>&copy; 2024 Dhruv Goswami. All Rights Reserved.</p>
+    </footer>
+</body>
+</html>
